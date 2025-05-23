@@ -1,9 +1,14 @@
+import Image from "next/image";
+
 export default function King({
   color,
 }: Readonly<{ color: "white" | "black" }>) {
   return (
-    <div className={``}>
-      <p>King</p>
-    </div>
+    <Image
+      src={color === "white" ? "/pieces/king-w.svg" : "/pieces/king-b.svg"}
+      alt={color === "white" ? "White King" : "Black King"}
+      width={50}
+      height={50}
+    />
   );
 }

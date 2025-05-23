@@ -1,7 +1,14 @@
-export default function Rook() {
+import Image from "next/image";
+
+export default function Rook({
+  color,
+}: Readonly<{ color: "white" | "black" }>) {
   return (
-    <div>
-      <p>Rook</p>
-    </div>
-  )
+    <Image
+      src={color === "white" ? "/pieces/rook-w.svg" : "/pieces/rook-b.svg"}
+      alt={color === "white" ? "White Rook" : "Black Rook"}
+      width={50}
+      height={50}
+    />
+  );
 }

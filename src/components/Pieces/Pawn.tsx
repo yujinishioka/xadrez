@@ -1,7 +1,14 @@
-export default function Pawn() {
+import Image from "next/image";
+
+export default function Pawn({
+  color,
+}: Readonly<{ color: "white" | "black" }>) {
   return (
-    <div>
-      <p>Pawn</p>
-    </div>
-  )
+    <Image
+      src={color === "white" ? "/pieces/pawn-w.svg" : "/pieces/pawn-b.svg"}
+      alt={color === "white" ? "White Pawn" : "Black Pawn"}
+      width={50}
+      height={50}
+    />
+  );
 }
