@@ -1,4 +1,4 @@
-import { isValidPawnMove } from "@/utils/moves";
+import { isValidPawnMove, isValidKingMove  } from "@/utils/moves";
 import { TBoard, TColor, TPosition } from "@/types/board";
 
 export function handleMove(
@@ -6,7 +6,7 @@ export function handleMove(
   to: TPosition,
   board: TBoard,
   turn: TColor
-): { updatedBoard: TBoard; moved: boolean } {
+): { updatedBoard: TBoard; moved: boolean; victory?: TColor; } {
   const piece = board[from.row][from.col];
   if (!piece || piece.color !== turn) return { updatedBoard: board, moved: false };
 
@@ -16,16 +16,26 @@ export function handleMove(
     case "pawn":
       isValid = isValidPawnMove(piece.color, from, to, board);
       break;
+    case "king":
+      isValid = isValidKingMove(piece.color, from, to, board);
+      break;
     // Adicione outras peças aqui
   }
 
   if (!isValid) return { updatedBoard: board, moved: false };
 
+  const target = board[to.row][to.col];
+  const capturedKing = target?.type === "king";
+
   const newBoard = board.map(row => [...row]);
   newBoard[to.row][to.col] = piece;
   newBoard[from.row][from.col] = null;
 
-  return { updatedBoard: newBoard, moved: true };
+  return {
+    updatedBoard: newBoard,
+    moved: true,
+    victory: capturedKing ? turn : undefined,
+  };
 }
 
 export function getValidMoves(

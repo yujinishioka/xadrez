@@ -40,3 +40,20 @@ export function isValidPawnMove(
 
   return false;
 }
+
+export function isValidKingMove(
+  color: TColor,
+  from: TPosition,
+  to: TPosition,
+  board: TBoard
+): boolean {
+  const rowDiff = Math.abs(to.row - from.row);
+  const colDiff = Math.abs(to.col - from.col);
+
+  if (rowDiff <= 1 && colDiff <= 1) {
+    const targetPiece = board[to.row][to.col];
+    return !targetPiece || targetPiece.color !== color;
+  }
+
+  return false;
+}
